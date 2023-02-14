@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t read;
-	char *args[] = {NULL};
-	char *envp[] = {NULL};
+	/* char *args[] = {NULL}; */
+	/* char *envp[] = {NULL}; */
 	
 	(void)argc;
 	while (1)
@@ -26,15 +26,13 @@ int main(int argc, char *argv[])
 			exit(0);
 		}
 		line[read - 1] = '\0';
-		if (strcmp(line, "exit") == 0)
-		{
-			free(line);
-			printf("\n");
-			exit(0);
-		}
+		argv = malloc(sizeof(char *) * 1);
+		argv[0] = malloc(sizeof(char) * strlen(line));
+		strcpy(argv[0], line);
 		if (fork() == 0)
 		{
-			if (execve(line, args, envp) == -1)
+			char *command = argv[0];
+			if (execve(command, argv, NULL) == -1)
 			{
 				dprintf(STDERR_FILENO, "%s: No such file or directory \n", argv[0]);
 				free(line);
