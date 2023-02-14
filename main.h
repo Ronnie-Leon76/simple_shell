@@ -8,4 +8,5 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+void exec(char **argv);
 #endif

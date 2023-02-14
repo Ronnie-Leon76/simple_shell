@@ -8,11 +8,13 @@
 int main(int argc, char *argv[])
 {
 	char *prompt = "#cisfun$";
-	char *line = NULL;
+	char *line = NULL, *line_copy = NULL;
+	char *token = NULL;
 	size_t len = 0;
 	ssize_t read;
-	/* char *args[] = {NULL}; */
-	/* char *envp[] = {NULL}; */
+	const char *delim = " ";
+	int num_tokens = 0;
+	int i;
 	
 	(void)argc;
 	while (1)
@@ -26,20 +28,39 @@ int main(int argc, char *argv[])
 			exit(0);
 		}
 		line[read - 1] = '\0';
-		argv = malloc(sizeof(char *) * 1);
-		argv[0] = malloc(sizeof(char) * strlen(line));
-		strcpy(argv[0], line);
+		line_copy = malloc(sizeof(char *) * read);
+		if (line_copy == NULL)
+		{
+			perror("Memory allocation error");
+			return (-1);
+		}
+		strcpy(line_copy, line);
+		token = strtok(line, delim);
+		while (token != NULL)
+		{
+			num_tokens++;
+			token = strtok(NULL, delim);
+		}
+		num_tokens++;
+		argv = malloc(sizeof(char *) * num_tokens);
+		token = strtok(line_copy, delim);
+		for (i = 0; token != NULL; i++)
+		{
+			argv[i] = malloc(sizeof(char) * strlen(token));
+			strcpy(argv[i], token);
+			token = strtok(NULL, delim);
+		}
+		argv[i] = NULL;
 		if (fork() == 0)
 		{
-			char *command = argv[0];
-			if (execve(command, argv, NULL) == -1)
-			{
-				dprintf(STDERR_FILENO, "%s: No such file or directory \n", argv[0]);
-				free(line);
-				exit(127);
-			}
+			exec(argv);
+			exit(127);
 		}
 		wait(NULL);
 	}
+
+	free(line_copy);
+	free(line);
+
 	return (0);
 }
