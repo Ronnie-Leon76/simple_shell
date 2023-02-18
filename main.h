@@ -9,4 +9,5 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 void exec(char **argv);
+char *get_location(char *command);
 #endif
