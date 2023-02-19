@@ -15,11 +15,12 @@ int main(int argc, char *argv[])
 	const char *delim = " ";
 	int num_tokens = 0;
 	int i;
+	pid_t pid;
 	
 	(void)argc;
 	while (1)
 	{
-		printf("%s ", prompt);
+		printf("%s", prompt);
 		read = getline(&line, &len, stdin);
 		if (read == -1)
 		{
@@ -28,13 +29,18 @@ int main(int argc, char *argv[])
 			exit(0);
 		}
 		line[read - 1] = '\0';
+		if (_strcmp(line, "exit") == 0)
+		{
+			free(line);
+			return (exit_builtin());
+		}
 		line_copy = malloc(sizeof(char *) * read);
 		if (line_copy == NULL)
 		{
 			perror("Memory allocation error");
 			return (-1);
 		}
-		strcpy(line_copy, line);
+		_strcpy(line_copy, line);
 		token = strtok(line, delim);
 		while (token != NULL)
 		{
@@ -47,7 +53,7 @@ int main(int argc, char *argv[])
 		for (i = 0; token != NULL; i++)
 		{
 			argv[i] = malloc(sizeof(char) * strlen(token));
-			strcpy(argv[i], token);
+			_strcpy(argv[i], token);
 			token = strtok(NULL, delim);
 		}
 		argv[i] = NULL;
@@ -59,13 +65,15 @@ int main(int argc, char *argv[])
 			{
 				exec(argv);
 				exit(127);
-			} else
-			{
-				printf("%s: command not found\n", argv[0]);
 			}
+			wait(NULL);
+		} else
+		{
+			printf("%s: command not found\n", argv[0]);
 		}
 		**/
-		if (fork() == 0)
+		pid = fork();
+		if (pid == 0)
 		{
 			exec(argv);
 			exit(127);
