@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
 	const char *delim = " ";
 	int num_tokens = 0;
 	int i;
-	
 	(void)argc;
 	while (1)
 	{
@@ -61,6 +60,5 @@ int main(int argc, char *argv[])
 
 	free(line_copy);
 	free(line);
-
 	return (0);
 }
