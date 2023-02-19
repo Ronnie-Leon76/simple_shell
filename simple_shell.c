@@ -51,6 +51,20 @@ int main(int argc, char *argv[])
 			token = strtok(NULL, delim);
 		}
 		argv[i] = NULL;
+		/**
+		if (command_exists(argv[0]))
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				exec(argv);
+				exit(127);
+			} else
+			{
+				printf("%s: command not found\n", argv[0]);
+			}
+		}
+		**/
 		if (fork() == 0)
 		{
 			exec(argv);
