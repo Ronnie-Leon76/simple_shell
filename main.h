@@ -10,4 +10,5 @@
 #include <fcntl.h>
 void exec(char **argv);
 char *get_location(char *command);
+int ownCmdHandler(char** parsed);
 #endif
