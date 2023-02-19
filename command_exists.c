@@ -13,16 +13,16 @@ int command_exists(char *cmd)
 
 	if (path)
 	{
-		command_length = strlen(cmd);
+		command_length = _strlen(cmd);
 		path_token = strtok(path, ":");
 		while (path_token != NULL)
 		{
-			directory_length = strlen(path_token);
+			directory_length = _strlen(path_token);
 			file_path = malloc(command_length + directory_length + 2);
-			strcpy(file_path, path_token);
-			strcat(file_path, "/");
-			strcat(file_path, cmd);
-			strcat(file_path, "\0");
+			_strcpy(file_path, path_token);
+			_strcat(file_path, "/");
+			_strcat(file_path, cmd);
+			_strcat(file_path, "\0");
 			if (access(file_path, F_OK) == 0)
 			{
 				return (1);
