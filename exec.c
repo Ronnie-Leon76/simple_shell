@@ -7,10 +7,17 @@
 void exec(char **argv)
 {
 	char *command = NULL, *actual_command = NULL;
+	char **env;
+	extern char **environ;
 
 	if (argv)
 	{
 		command = argv[0];
+		if (_strcmp(command, "env") == 0)
+		{
+			for (env = environ; *env != NULL; env++)
+				printf("%s\n", *env);
+		}
 
 		actual_command = get_location(command);
 

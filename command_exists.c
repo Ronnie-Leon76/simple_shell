@@ -14,7 +14,7 @@ int command_exists(char *cmd)
 	if (path)
 	{
 		command_length = _strlen(cmd);
-		path_token = strtok(path, ":");
+		path_token = _strtok(path, ":");
 		while (path_token != NULL)
 		{
 			directory_length = _strlen(path_token);
@@ -27,7 +27,7 @@ int command_exists(char *cmd)
 			{
 				return (1);
 			}
-			path_token = strtok(NULL, ":");
+			path_token = _strtok(NULL, ":");
 		}
 		return (0);
 
