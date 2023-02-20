@@ -13,6 +13,12 @@ void exec(char **argv)
 	if (argv)
 	{
 		command = argv[0];
+		/**
+		if (_strcmp(command, "exit") == 0)
+		{
+			__exit(argv);
+		}
+		**/
 		if (_strcmp(command, "env") == 0)
 		{
 			for (env = environ; *env != NULL; env++)

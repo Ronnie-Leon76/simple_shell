@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 	int num_tokens = 0;
 	int i;
 	pid_t pid;
-	
 	(void)argc;
+	
 	while (1)
 	{
 		printf("%s", prompt);
@@ -29,11 +29,6 @@ int main(int argc, char *argv[])
 			exit(0);
 		}
 		line[read - 1] = '\0';
-		if (_strcmp(line, "exit") == 0)
-		{
-			free(line);
-			return (exit_builtin());
-		}
 		line_copy = malloc(sizeof(char *) * read);
 		if (line_copy == NULL)
 		{

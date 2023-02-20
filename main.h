@@ -19,4 +19,6 @@ int _strcmp(char *s1, char *s2);
 int exit_builtin();
 char *_getline(void);
 char *_strtok(char *str, char *delim);
+int __exit(char **args);
+int _atoi(char *s);
 #endif
