@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 	char *token = NULL;
 	size_t len = 0;
 	ssize_t read;
-	const char *delim = " ";
+	char *delim = " ";
 	int num_tokens = 0;
 	int i;
 	pid_t pid;
@@ -41,20 +41,20 @@ int main(int argc, char *argv[])
 			return (-1);
 		}
 		_strcpy(line_copy, line);
-		token = strtok(line, delim);
+		token = _strtok(line, delim);
 		while (token != NULL)
 		{
 			num_tokens++;
-			token = strtok(NULL, delim);
+			token = _strtok(NULL, delim);
 		}
 		num_tokens++;
 		argv = malloc(sizeof(char *) * num_tokens);
-		token = strtok(line_copy, delim);
+		token = _strtok(line_copy, delim);
 		for (i = 0; token != NULL; i++)
 		{
-			argv[i] = malloc(sizeof(char) * strlen(token));
+			argv[i] = malloc(sizeof(char) * _strlen(token));
 			_strcpy(argv[i], token);
-			token = strtok(NULL, delim);
+			token = _strtok(NULL, delim);
 		}
 		argv[i] = NULL;
 		/**
