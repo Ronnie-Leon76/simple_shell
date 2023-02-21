@@ -13,16 +13,22 @@ void exec(char **argv)
 	if (argv)
 	{
 		command = argv[0];
-		/**
 		if (_strcmp(command, "exit") == 0)
 		{
 			__exit(argv);
 		}
-		**/
 		if (_strcmp(command, "env") == 0)
 		{
 			for (env = environ; *env != NULL; env++)
 				printf("%s\n", *env);
+		}
+		if (_strcmp(command, "setenv") == 0)
+		{
+			_setenv(argv[1], argv[2],_atoi(argv[3]));
+		}
+		if (_strcmp(command, "unsetenv") == 0)
+		{
+			_unsetenv(argv[1]);
 		}
 
 		actual_command = get_location(command);
