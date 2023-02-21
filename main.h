@@ -23,4 +23,6 @@ int __exit(char **args);
 int _atoi(char *s);
 int _setenv(char *name, char *value, int overwrite);
 int _unsetenv(char *name);
+int _cd(char **args);
+char *_getenv(char *name);
 #endif

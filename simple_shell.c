@@ -5,7 +5,7 @@
  * @argv: array of arguments
  * Return: 0
  */
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
 	char *prompt = "#cisfun$";
 	char *line = NULL, *line_copy = NULL;
@@ -38,23 +38,23 @@ int main(int argc, char *argv[])
 		_strcpy(line_copy, line);
 		if (line != NULL)
 		{
-			token = strtok(line, delim);
+			token = _strtok(line, delim);
 			while (token != NULL)
 			{
 				num_tokens++;
-				token = strtok(NULL, delim);
+				token = _strtok(NULL, delim);
 			}
 			num_tokens++;
 		}
 		argv = malloc(sizeof(char *) * num_tokens);
 		if (line_copy != NULL)
 		{
-			token = strtok(line_copy, delim);
+			token = _strtok(line_copy, delim);
 			for (i = 0; token != NULL; i++)
 			{
 				argv[i] = malloc(sizeof(char) * _strlen(token));
 				_strcpy(argv[i], token);
-				token = strtok(NULL, delim);
+				token = _strtok(NULL, delim);
 			}
 			argv[i] = NULL;
 		}

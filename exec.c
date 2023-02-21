@@ -15,7 +15,7 @@ void exec(char **argv)
 		command = argv[0];
 		if (_strcmp(command, "exit") == 0)
 		{
-			__exit(argv);
+			_exit(_atoi(argv[1]));
 		}
 		if (_strcmp(command, "env") == 0)
 		{
@@ -29,6 +29,10 @@ void exec(char **argv)
 		if (_strcmp(command, "unsetenv") == 0)
 		{
 			_unsetenv(argv[1]);
+		}
+		if (_strcmp(command, "cd") == 0)
+		{
+			_cd(argv);
 		}
 
 		actual_command = get_location(command);
