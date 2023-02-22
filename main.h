@@ -11,6 +11,9 @@
 extern char **envion;
 void exec(char **argv);
 char *get_location(char *command);
+<<<<<<< HEAD
+int ownCmdHandler(char** parsed);
+=======
 int command_exists(char *cmd);
 int _strlen(char *s);
 char *_strdup(char *str);
@@ -26,4 +29,5 @@ int _setenv(char *name, char *value, int overwrite);
 int _unsetenv(char *name);
 int _cd(char **args);
 char *_getenv(char *name);
+>>>>>>> origin/simple-shell-0.7
 #endif

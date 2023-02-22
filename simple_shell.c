@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 	char *delim = " ";
 	int num_tokens = 0;
 	int i;
-	pid_t pid;
+	
 	(void)argc;
 	while (1)
 	{
@@ -83,6 +83,5 @@ int main(int argc, char **argv)
 
 	free(line_copy);
 	free(line);
-
 	return (0);
 }
