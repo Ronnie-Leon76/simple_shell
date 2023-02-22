@@ -7,7 +7,6 @@
 char *_getenv(char *name)
 {
 	int i = 0, j = 0;
-	extern char **environ;
 
 	if (name == NULL)
 		return (NULL);

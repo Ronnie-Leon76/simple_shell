@@ -17,7 +17,6 @@ int main(int argc, char **argv)
 	int i;
 	pid_t pid;
 	(void)argc;
-	
 	while (1)
 	{
 		printf("%s", prompt);

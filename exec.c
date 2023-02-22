@@ -8,7 +8,6 @@ void exec(char **argv)
 {
 	char *command = NULL, *actual_command = NULL;
 	char **env;
-	extern char **environ;
 
 	if (argv)
 	{
@@ -35,8 +34,7 @@ void exec(char **argv)
 			_cd(argv);
 		}
 		actual_command = get_location(command);
-
-		if (execve(actual_command, argv, NULL ) == -1)
+		if (execve(actual_command, argv, NULL) == -1)
 		{
 			dprintf(STDERR_FILENO, "%s: No such file or directory \n", argv[0]);
 		}

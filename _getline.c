@@ -1,6 +1,9 @@
 #include "main.h"
 /**
- * getline - reads a line from stdin
+ * getline - reads the number of bytes read
+ * @lineptr: pointer to memory where buffer data will be stored
+ * @n: size of the buffer
+ * @stream: input stream file
  * Return: number of bytes read
  */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
@@ -27,7 +30,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		{
 			bytes_read = read(STDIN_FILENO, buffer, 1024);
 			if (bytes_read == -1)
-				return(-1);
+				return (-1);
 		}
 		if (bytes_read == 0)
 			return (0);

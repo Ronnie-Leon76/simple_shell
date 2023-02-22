@@ -1,8 +1,8 @@
 #include "main.h"
 /**
- * _exit - exits the shell
+ * _exit - exits the shell and returns status code or (0)
  * @args: arguments
- * Return: 0
+ * Return: status code or (0) if no status code
  */
 int __exit(char **args)
 {

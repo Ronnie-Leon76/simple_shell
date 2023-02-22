@@ -5,7 +5,7 @@
  *
  * Returns: Always (0)
  */
-int exit_builtin()
+int exit_builtin(void)
 {
 	return (0);
 }
