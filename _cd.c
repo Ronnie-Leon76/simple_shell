@@ -11,13 +11,13 @@ int _cd(char **args)
 
 	if (args[1] == NULL)
 	{
-		home = _getenv("HOME");
+		home = getenv("HOME");
 		if (home == NULL)
 			return (-1);
 		if (chdir(home) != 0)
 			return (-1);
 		/*Update PWD Environment variable*/
-		pwd = _getenv("PWD");
+		pwd = getenv("PWD");
 		if (pwd == NULL)
 			return (-1);
 		newpwd = _strcat("PWD=", pwd);
@@ -25,7 +25,7 @@ int _cd(char **args)
 			return (-1);
 		_setenv("PWD", newpwd, 1);
 		/*Update OLDPWD environment variable*/
-		oldpwd = _getenv("OLDPWD");
+		oldpwd = getenv("OLDPWD");
 		if (oldpwd == NULL)
 			return (-1);
 		newoldpwd = _strcat("OLDPWD=", oldpwd);
@@ -64,7 +64,7 @@ int _cd(char **args)
 		i++;
 		newpwd_value[i] = '\0';
 		_setenv("PWD", newpwd_value, 1);
-		oldpwd = _getenv("OLDPWD");
+		oldpwd = getenv("OLDPWD");
 		if (oldpwd == NULL)
 			return (-1);
 		len = _strlen(oldpwd) + 8;

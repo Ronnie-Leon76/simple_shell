@@ -17,24 +17,23 @@ void exec(char **argv)
 		{
 			_exit(_atoi(argv[1]));
 		}
-		if (_strcmp(command, "env") == 0)
+		else if (_strcmp(command, "env") == 0)
 		{
 			for (env = environ; *env != NULL; env++)
 				printf("%s\n", *env);
 		}
-		if (_strcmp(command, "setenv") == 0)
+		else if (_strcmp(command, "setenv") == 0)
 		{
-			_setenv(argv[1], argv[2],_atoi(argv[3]));
+			_setenv(argv[1], argv[2], _atoi(argv[3]));
 		}
-		if (_strcmp(command, "unsetenv") == 0)
+		else if (_strcmp(command, "unsetenv") == 0)
 		{
 			_unsetenv(argv[1]);
 		}
-		if (_strcmp(command, "cd") == 0)
+		else if (_strcmp(command, "cd") == 0)
 		{
 			_cd(argv);
 		}
-
 		actual_command = get_location(command);
 
 		if (execve(actual_command, argv, NULL ) == -1)

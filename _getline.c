@@ -1,34 +1,51 @@
 #include "main.h"
 /**
  * getline - reads a line from stdin
- * Return: line
+ * Return: number of bytes read
  */
-char *_getline(void)
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	char *line = NULL;
-	char *buffer = NULL;
-	int i = 0, j = 0, k = 0, read_size = 0, line_size = 0;
+	static char *buffer;
+	static int i = 0, bytes_read;
+	int j = 0;
 
-	buffer = malloc(sizeof(char) * 1024);
 	if (buffer == NULL)
-		return (NULL);
-	read_size = read(STDIN_FILENO, buffer, 1024);
-	if (read_size == -1)
-		return (NULL);
-	while (buffer[i] != ' ')
 	{
-		i++;
+		buffer = malloc(sizeof(char) * 1024);
+		if (buffer == NULL)
+			return (-1);
 	}
-	line_size = i;
-	line = malloc(sizeof(char) * line_size);
-	if (line == NULL)
-		return (NULL);
-	while (j < line_size)
+	if (n == NULL)
 	{
-		line[j] = buffer[k];
-		j++;
-		k++;
+		n = malloc(sizeof(size_t));
+		if (n == NULL)
+			return (-1);
 	}
-	free(buffer);
-	return (line);
+	if (stream == NULL)
+	{
+		if (bytes_read == 0)
+		{
+			bytes_read = read(STDIN_FILENO, buffer, 1024);
+			if (bytes_read == -1)
+				return(-1);
+		}
+		if (bytes_read == 0)
+			return (0);
+		*lineptr = malloc(sizeof(char) * 1024);
+		if (*lineptr == NULL)
+			return (-1);
+		while (bytes_read != 0)
+		{
+			while (buffer[i] != ' ')
+			{
+				(*lineptr)[j] = buffer[i];
+				i++;
+				j++;
+			}
+			(*lineptr)[j] = '\0';
+			if (buffer[i] == ' ')
+				break;
+		}
+	}
+	return ((ssize_t)bytes_read);
 }
