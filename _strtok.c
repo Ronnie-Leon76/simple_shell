@@ -13,7 +13,11 @@ char *_strtok(char *str, char *delim)
 	int i = 0, j = 0;
 
 	if (str == NULL)
+	{
+		if (last == NULL)
+			return (NULL);
 		str = last;
+	}
 	while (str[i] != '\0')
 	{
 		while (delim[j] != '\0')

@@ -5,7 +5,7 @@
  * @argv: array of arguments
  * Return: 0
  */
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
 	char *prompt = "#cisfun$";
 	char *line = NULL, *line_copy = NULL;
@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
 	char *delim = " ";
 	int num_tokens = 0;
 	int i;
-	pid_t pid;
 	
 	(void)argc;
 	while (1)
@@ -29,11 +28,6 @@ int main(int argc, char *argv[])
 			exit(0);
 		}
 		line[read - 1] = '\0';
-		if (_strcmp(line, "exit") == 0)
-		{
-			free(line);
-			return (exit_builtin());
-		}
 		line_copy = malloc(sizeof(char *) * read);
 		if (line_copy == NULL)
 		{
@@ -41,22 +35,28 @@ int main(int argc, char *argv[])
 			return (-1);
 		}
 		_strcpy(line_copy, line);
-		token = _strtok(line, delim);
-		while (token != NULL)
+		if (line != NULL)
 		{
+			token = _strtok(line, delim);
+			while (token != NULL)
+			{
+				num_tokens++;
+				token = _strtok(NULL, delim);
+			}
 			num_tokens++;
-			token = _strtok(NULL, delim);
 		}
-		num_tokens++;
 		argv = malloc(sizeof(char *) * num_tokens);
-		token = _strtok(line_copy, delim);
-		for (i = 0; token != NULL; i++)
+		if (line_copy != NULL)
 		{
-			argv[i] = malloc(sizeof(char) * _strlen(token));
-			_strcpy(argv[i], token);
-			token = _strtok(NULL, delim);
+			token = _strtok(line_copy, delim);
+			for (i = 0; token != NULL; i++)
+			{
+				argv[i] = malloc(sizeof(char) * _strlen(token));
+				_strcpy(argv[i], token);
+				token = _strtok(NULL, delim);
+			}
+			argv[i] = NULL;
 		}
-		argv[i] = NULL;
 		/**
 		if (command_exists(argv[0]))
 		{
@@ -83,6 +83,5 @@ int main(int argc, char *argv[])
 
 	free(line_copy);
 	free(line);
-
 	return (0);
 }
