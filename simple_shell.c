@@ -5,20 +5,21 @@
  * @argv: array of arguments
  * Return: 0
  */
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
 	char *prompt = "#cisfun$";
 	char *line = NULL, *line_copy = NULL;
 	char *token = NULL;
 	size_t len = 0;
 	ssize_t read;
-	const char *delim = " ";
+	char *delim = " ";
 	int num_tokens = 0;
 	int i;
+	
 	(void)argc;
 	while (1)
 	{
-		printf("%s ", prompt);
+		printf("%s", prompt);
 		read = getline(&line, &len, stdin);
 		if (read == -1)
 		{
@@ -33,24 +34,46 @@ int main(int argc, char *argv[])
 			perror("Memory allocation error");
 			return (-1);
 		}
-		strcpy(line_copy, line);
-		token = strtok(line, delim);
-		while (token != NULL)
+		_strcpy(line_copy, line);
+		if (line != NULL)
 		{
+			token = _strtok(line, delim);
+			while (token != NULL)
+			{
+				num_tokens++;
+				token = _strtok(NULL, delim);
+			}
 			num_tokens++;
-			token = strtok(NULL, delim);
 		}
-		num_tokens++;
 		argv = malloc(sizeof(char *) * num_tokens);
-		token = strtok(line_copy, delim);
-		for (i = 0; token != NULL; i++)
+		if (line_copy != NULL)
 		{
-			argv[i] = malloc(sizeof(char) * strlen(token));
-			strcpy(argv[i], token);
-			token = strtok(NULL, delim);
+			token = _strtok(line_copy, delim);
+			for (i = 0; token != NULL; i++)
+			{
+				argv[i] = malloc(sizeof(char) * _strlen(token));
+				_strcpy(argv[i], token);
+				token = _strtok(NULL, delim);
+			}
+			argv[i] = NULL;
 		}
-		argv[i] = NULL;
-		if (fork() == 0)
+		/**
+		if (command_exists(argv[0]))
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				exec(argv);
+				exit(127);
+			}
+			wait(NULL);
+		} else
+		{
+			printf("%s: command not found\n", argv[0]);
+		}
+		**/
+		pid = fork();
+		if (pid == 0)
 		{
 			exec(argv);
 			exit(127);
