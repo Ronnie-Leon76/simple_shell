@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		printf("%s", prompt);
-		read = getline(&line, &len, stdin);
+		read = _getline(&line, &len, stdin);
 		if (read == -1)
 		{
 			free(line);
