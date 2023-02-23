@@ -7,19 +7,11 @@
 void exec(char **argv)
 {
 	char *command = NULL, *actual_command = NULL;
-<<<<<<< HEAD
-=======
 	char **env;
->>>>>>> origin/simple-shell-0.7
-
+	
 	if (argv)
 	{
 		command = argv[0];
-<<<<<<< HEAD
-		actual_command = get_location(command);
-
-		if (execve(actual_command, argv, NULL ) == -1)
-=======
 		if (_strcmp(command, "exit") == 0)
 		{
 			_exit(_atoi(argv[1]));
@@ -43,7 +35,6 @@ void exec(char **argv)
 		}
 		actual_command = get_location(command);
 		if (execve(actual_command, argv, NULL) == -1)
->>>>>>> origin/simple-shell-0.7
 		{
 			dprintf(STDERR_FILENO, "%s: No such file or directory \n", argv[0]);
 		}
