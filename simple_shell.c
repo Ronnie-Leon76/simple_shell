@@ -15,6 +15,7 @@ int main(int argc, char **argv)
 	char *delim = " ";
 	int num_tokens = 0;
 	int i;
+	pid_t pid;
 	
 	(void)argc;
 	while (1)
@@ -28,6 +29,11 @@ int main(int argc, char **argv)
 			exit(0);
 		}
 		line[read - 1] = '\0';
+		if (_strcmp(line, "exit") == 0)
+		{
+			free(line);
+			return (exit_builtin());
+		}
 		line_copy = malloc(sizeof(char *) * read);
 		if (line_copy == NULL)
 		{
@@ -57,21 +63,6 @@ int main(int argc, char **argv)
 			}
 			argv[i] = NULL;
 		}
-		/**
-		if (command_exists(argv[0]))
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				exec(argv);
-				exit(127);
-			}
-			wait(NULL);
-		} else
-		{
-			printf("%s: command not found\n", argv[0]);
-		}
-		**/
 		pid = fork();
 		if (pid == 0)
 		{

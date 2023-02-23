@@ -8,7 +8,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-extern char **envion;
+extern char **environ;
 void exec(char **argv);
 char *get_location(char *command);
 int ownCmdHandler(char** parsed);
