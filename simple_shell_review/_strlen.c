@@ -1,20 +1,19 @@
 #include "shell.h"
 /**
  * _strlen - returns the length of a string
- * @s: string
+ * @s: the string whose length to check
  *
- * Return: length of s
+ * Return: integer length of string
  */
-int _strlen(char *s)
-{
-	int len = 0;
+int _strlen(char *s) {
+  int i = 0;
 
-	while (*s != '\0')
-	{
-		len++;
-		s++;
-	}
-	return (len);
+  if (!s)
+    return (0);
+
+  while (*s++)
+    i++;
+  return (i);
 }
 
 /**
@@ -24,10 +23,9 @@ int _strlen(char *s)
  *
  * Return: address of next char of haystack or NULL
  */
-char *starts_with(const char *haystack, const char *needle){
-	while (*needle){
-		if (*needle++ != *haystack++)
-			return (NULL);
-	}
-	return ((char *)haystack);
+char *starts_with(const char *haystack, const char *needle) {
+  while (*needle)
+    if (*needle++ != *haystack++)
+      return (NULL);
+  return ((char *)haystack);
 }

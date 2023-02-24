@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <stdio.h>
 
 /**
  * hsh - main shell loop
@@ -53,13 +54,13 @@ int find_builtin(info_t *info) {
       {"exit", _myexit},       {"env", _myenv},       {"help", _myhelp},
       {"history", _myhistory}, {"setenv", _mysetenv}, {"unsetenv", _myunsetenv},
       {"cd", _mycd},           {"alias", _myalias},   {NULL, NULL}};
-  for (i = 0; builtintbl[i].type; i++) {
+
+  for (i = 0; builtintbl[i].type; i++)
     if (_strcmp(info->argv[0], builtintbl[i].type) == 0) {
       info->line_count++;
       built_in_ret = builtintbl[i].func(info);
       break;
     }
-  }
   return (built_in_ret);
 }
 
@@ -78,13 +79,13 @@ void find_cmd(info_t *info) {
     info->line_count++;
     info->linecount_flag = 0;
   }
-  for (i = 0, k = 0; info->arg[i]; i++) {
+  for (i = 0, k = 0; info->arg[i]; i++)
     if (!is_delim(info->arg[i], " \t\n"))
       k++;
-  }
   if (!k)
     return;
-  path = find_path(info, "PATH=", info->argv[0]);
+
+  path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
   if (path) {
     info->path = path;
     fork_cmd(info);
@@ -111,7 +112,8 @@ void fork_cmd(info_t *info) {
 
   child_pid = fork();
   if (child_pid == -1) {
-    perror("Error creating child process");
+    /* TODO: PUT ERROR FUNCTION */
+    perror("Error:");
     return;
   }
   if (child_pid == 0) {
@@ -121,6 +123,7 @@ void fork_cmd(info_t *info) {
         exit(126);
       exit(1);
     }
+    /* TODO: PUT ERROR FUNCTION */
   } else {
     wait(&(info->status));
     if (WIFEXITED(info->status)) {
