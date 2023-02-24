@@ -1,16 +1,16 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
+#include <errno.h>
+#include <fcntl.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <sys/stat.h>
-#include <limits.h>
-#include <fcntl.h>
-#include <errno.h>
+#include <unistd.h>
 
 /* for read/write buffers */
 #define READ_BUF_SIZE 1024
@@ -36,18 +36,16 @@
 
 extern char **environ;
 
-
 /**
  * struct liststr - singly linked list
  * @num: the number field
  * @str: a string
  * @next: points to the next node
  */
-typedef struct liststr
-{
-	int num;
-	char *str;
-	struct liststr *next;
+typedef struct liststr {
+  int num;
+  char *str;
+  struct liststr *next;
 } list_t;
 
 /**
@@ -72,44 +70,43 @@ typedef struct liststr
  * @readfd: the fd from which to read line input
  * @histcount: the history line number count
  */
-typedef struct passinfo
-{
-	char *arg;
-	char **argv;
-	char *path;
-	int argc;
-	unsigned int line_count;
-	int err_num;
-	int linecount_flag;
-	char *fname;
-	list_t *env;
-	list_t *history;
-	list_t *alias;
-	char **environ;
-	int env_changed;
-	int status;
+typedef struct passinfo {
+  char *arg;
+  char **argv;
+  char *path;
+  int argc;
+  unsigned int line_count;
+  int err_num;
+  int linecount_flag;
+  char *fname;
+  list_t *env;
+  list_t *history;
+  list_t *alias;
+  char **environ;
+  int env_changed;
+  int status;
 
-	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
-	int cmd_buf_type; /* CMD_type ||, &&, ; */
-	int readfd;
-	int histcount;
+  char **cmd_buf;   /* pointer to cmd ; chain buffer, for memory mangement */
+  int cmd_buf_type; /* CMD_type ||, &&, ; */
+  int readfd;
+  int histcount;
 } info_t;
 
-#define INFO_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-	0, 0, 0}
+#define INFO_INIT                                                              \
+  {                                                                            \
+    NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, \
+        0, 0                                                                   \
+  }
 
 /**
  * struct builtin - contains a builtin string and related function
  * @type: the builtin command flag
  * @func: the function
  */
-typedef struct builtin
-{
-	char *type;
-	int (*func)(info_t *);
+typedef struct builtin {
+  char *type;
+  int (*func)(info_t *);
 } builtin_table;
-
 
 /* toem_shloop.c */
 int hsh(info_t *, char **);
@@ -139,7 +136,7 @@ char *_strcat(char *, char *);
 
 /* toem_string1.c */
 char *_strcpy(char *, char *);
-char *_strdup(char *str);
+char *_strdup(const char *str);
 void _puts(char *);
 int _putchar(char);
 
